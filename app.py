@@ -6,13 +6,13 @@ app = Flask(__name__, template_folder="template",static_folder="static")
 
 # -------- EMAIL CONFIGURATION --------
 SENDER_EMAIL = "muhammedtesleemolatundun@gmail.com"
-SENDER_PASSWORD = "dovu gewv whvk raqu"   # Gmail App Password
+SENDER_PASSWORD = "dovu gewv whvk raqu"   
 RECEIVER_EMAIL = "muhammedtesleemolatundun@gmail.com"
 
 
 @app.route("/")
 def home():
-    return render_template("index.html")  # load your portfolio
+    return render_template("index.html")  
 
 
 @app.route("/contact", methods=["POST"])
