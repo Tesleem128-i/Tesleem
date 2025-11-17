@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tesleem Olatundun - Portfolio</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Icons8 fav icon -->
+  <link rel="icon" type="image/png" href="https://img.icons8.com/ios-filled/50/code.png"/>
+
+  <style>
+    :root{
+      --bg: #0f172a; /* default dark */
+      --muted: #94a3b8;
+      --accent: #60a5fa; /* blue */
+    }
+    [data-theme='blue'] { --accent: #60a5fa; }
+    [data-theme='green'] { --accent: #34d399; }
+    [data-theme='red'] { --accent: #f87171; }
+    [data-theme='pink'] { --accent: #f472b6; }
+
+    body{ background: linear-gradient(180deg,#0b1220 0%, #071025 100%); }
+
+    /* Brick pieces container styles */
+    .brick-wrap { position:fixed; inset:0; pointer-events:none; z-index:60; }
+    .brick { width:64px; height:32px; background:#9b3b2f; box-shadow:0 4px 8px rgba(0,0,0,0.6); }
+
+    /* Mobile slide menu */
+    .mobile-menu { transform: translateX(100%); transition: transform .35s ease; }
+    .mobile-menu.open { transform: translateX(0); }
+
+    /* Expanding nav link */
+    .nav-link { transition: transform .22s cubic-bezier(.2,.9,.3,1), color .2s; }
+    .nav-link:hover { transform: scale(1.18); color: var(--accent); }
+
+    /* Project hover expand */
+    .proj-card { transition: transform .28s ease, box-shadow .28s ease; }
+    .proj-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+  </style>
+</head>
+
+<body data-theme="blue" class="text-white antialiased">
+
+  <!-- BRICK LAYER (will be animated by GSAP) -->
+  <div class="brick-wrap" id="brickWrap"></div>
+
+  <!-- NAVBAR -->
+  <nav class="w-full px-6 py-4 flex justify-between items-center bg-gray-800/60 backdrop-blur-md fixed top-0 left-0 z-50">
+    <div class="flex items-center gap-4">
+      <img src="https://img.icons8.com/ios-filled/40/ffffff/code.png" alt="logo" class="w-8 h-8">
+      <h1 class="text-2xl font-bold">Tesleem.dev</h1>
+    </div>
+
+    <div class="hidden md:flex space-x-6 text-lg">
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+
+    <!-- theme switch + mobile toggle -->
+    <div class="flex items-center gap-3">
+      <select id="themeSelect" class="bg-gray-800/60 p-2 rounded text-sm">
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+        <option value="red">Red</option>
+        <option value="pink">Pink</option>
+      </select>
+
+      <button id="mobileToggle" class="md:hidden p-2 bg-white/5 rounded">☰</button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div id="mobileMenu" class="mobile-menu fixed right-0 top-0 h-full w-72 bg-gray-900/95 p-6 z-40">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-xl font-bold">Menu</h2>
+      <button id="mobileClose">✕</button>
+    </div>
+    <nav class="flex flex-col gap-4">
+      <a href="#projects" class="py-2 px-3 rounded hover:bg-white/5">Projects</a>
+      <a href="#skills" class="py-2 px-3 rounded hover:bg-white/5">Skills</a>
+      <a href="#faq" class="py-2 px-3 rounded hover:bg-white/5">FAQ</a>
+      <a href="#contact" class="py-2 px-3 rounded hover:bg-white/5">Contact</a>
+    </nav>
+  </div>
+
+  <main class="pt-20">
+
+    <!-- HERO -->
+    <section id="hero" class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+      <h2 class="text-4xl md:text-5xl font-extrabold mb-4">Hello, I'm <span id="nameAccent" class="text-blue-400">Tesleem Olatundun</span></h2>
+      <p class="text-gray-300 max-w-2xl mb-6">Full-stack dev — Flask, Python, MySQL, Tailwind. I build apps, tools and templates.</p>
+      <button class="mt-6 px-8 py-3 bg-blue-500 rounded-full text-lg font-semibold relative overflow-hidden group">
+        <span class="relative z-20">Hire Me</span>
+        <span class="absolute inset-0 bg-blue-700 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-full"></span>
+      </button>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="py-20 bg-gray-800 px-6">
+      <h3 class="text-3xl font-bold text-center mb-12">My Skills</h3>
+      <div class="grid md:grid-cols-5 gap-8 max-w-6xl mx-auto">
+        <div class="bg-gray-700 p-6 rounded-2xl shadow-lg proj-card"><h4 class="text-xl font-bold mb-2">Python</h4><p class="text-gray-300">Scripting, OOP, automation.</p></div>
+        <div class="bg-gray-700 p-6 rounded-2xl shadow-lg proj-card"><h4 class="text-xl font-bold mb-2">Flask</h4><p class="text-gray-300">API, backend systems.</p></div>
+        <div class="bg-gray-700 p-6 rounded-2xl shadow-lg proj-card"><h4 class="text-xl font-bold mb-2">MySQL / SQLite</h4><p class="text-gray-300">Database design, queries.</p></div>
+        <div class="bg-gray-700 p-6 rounded-2xl shadow-lg proj-card"><h4 class="text-xl font-bold mb-2">HTML / CSS</h4><p class="text-gray-300">Clean UI layouts.</p></div>
+        <div class="bg-gray-700 p-6 rounded-2xl shadow-lg proj-card"><h4 class="text-xl font-bold mb-2">TailwindCSS</h4><p class="text-gray-300">Modern responsive styling.</p></div>
+        <div class="bg-gray-700 p-6 rounded-2xl shadow-lg proj-card"><h4 class="text-xl font-bold mb-2">JavaScript</h4><p class="text-gray-300">Frontend logic, DOM work.</p></div>
+        <div class="bg-gray-700 p-6 rounded-2xl shadow-lg proj-card"><h4 class="text-xl font-bold mb-2">GSAP</h4><p class="text-gray-300">Animations and transitions.</p></div>
+        <div class="bg-gray-700 p-6 rounded-2xl shadow-lg proj-card"><h4 class="text-xl font-bold mb-2">API Integration</h4><p class="text-gray-300">RESTful communication.</p></div>
+        <div class="bg-gray-700 p-6 rounded-2xl shadow-lg proj-card"><h4 class="text-xl font-bold mb-2">Git / GitHub</h4><p class="text-gray-300">Version control.</p></div>
+        <div class="bg-gray-700 p-6 rounded-2xl shadow-lg proj-card"><h4 class="text-xl font-bold mb-2">UI/UX</h4><p class="text-gray-300">Clean and interactive design.</p></div>
+      </div>
+    </section>
+
+    <!-- PROJECTS --> -->
+    <section id="projects" class="py-20 px-6">
+      <h3 class="text-3xl font-bold text-center mb-12">Projects</h3>
+      <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+
+        <!-- Fincom -->
+        <a href="https://www.example-fincom.com" target="_blank" class="block bg-gray-800 p-6 rounded-xl proj-card">
+          <div class="flex items-start gap-4">
+            <img src="https://img.icons8.com/ios-filled/48/60a5fa/bank-cards.png" alt="fincom" class="w-12 h-12">
+            <div>
+              <h4 class="text-xl font-bold">FinCom — Income & Expense Tracker</h4>
+              <p class="text-gray-300 mt-1">Flask + SQLite + Chart.js dynamic dashboard.</p>
+              <p class="mt-3 text-blue-300">Click to open project →</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- Social -->
+        <a href="https://www.example-social.com" target="_blank" class="block bg-gray-800 p-6 rounded-xl proj-card">
+          <div class="flex items-start gap-4">
+            <img src="https://img.icons8.com/ios-filled/48/60a5fa/user-group-man-man.png" alt="social" class="w-12 h-12">
+            <div>
+              <h4 class="text-xl font-bold">Social Media App</h4>
+              <p class="text-gray-300 mt-1">Messaging, stories, follow system built in Python.</p>
+              <p class="mt-3 text-blue-300">Click to open project →</p>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-20 bg-gray-800 px-6">
+      <h3 class="text-3xl font-bold text-center mb-12">FAQ</h3>
+      <div class="max-w-3xl mx-auto space-y-4">
+        <div class="bg-gray-700 p-4 rounded-lg cursor-pointer" onclick="toggleFAQ(this)"><div class="flex justify-between items-center"><h4 class="text-xl font-semibold">What services do you offer?</h4><span class="text-2xl">+</span></div><p class="text-gray-300 mt-2 hidden">Web dev, backend, analytics.</p></div>
+        <div class="bg-gray-700 p-4 rounded-lg cursor-pointer" onclick="toggleFAQ(this)"><div class="flex justify-between items-center"><h4 class="text-xl font-semibold">Do you collaborate on projects?</h4><span class="text-2xl">+</span></div><p class="text-gray-300 mt-2 hidden">Yes — reach out via contact.</p></div>
+        <div class="bg-gray-700 p-4 rounded-lg cursor-pointer" onclick="toggleFAQ(this)"><div class="flex justify-between items-center"><h4 class="text-xl font-semibold">How fast do you deliver projects?</h4><span class="text-2xl">+</span></div><p class="text-gray-300 mt-2 hidden">Depending on scope, 2–14 days.</p></div>
+        <div class="bg-gray-700 p-4 rounded-lg cursor-pointer" onclick="toggleFAQ(this)"><div class="flex justify-between items-center"><h4 class="text-xl font-semibold">Can you build custom dashboards?</h4><span class="text-2xl">+</span></div><p class="text-gray-300 mt-2 hidden">Yes — Flask + Charts + APIs.</p></div>
+        <div class="bg-gray-700 p-4 rounded-lg cursor-pointer" onclick="toggleFAQ(this)"><div class="flex justify-between items-center"><h4 class="text-xl font-semibold">Do you develop mobile-friendly sites?</h4><span class="text-2xl">+</span></div><p class="text-gray-300 mt-2 hidden">Yes — fully responsive UI.</p></div>
+        <div class="bg-gray-700 p-4 rounded-lg cursor-pointer" onclick="toggleFAQ(this)"><div class="flex justify-between items-center"><h4 class="text-xl font-semibold">What technologies do you specialize in?</h4><span class="text-2xl">+</span></div><p class="text-gray-300 mt-2 hidden">Python, Flask, SQL, Tailwind, JS.</p></div>
+        <div class="bg-gray-700 p-4 rounded-lg cursor-pointer" onclick="toggleFAQ(this)"><div class="flex justify-between items-center"><h4 class="text-xl font-semibold">Do you offer maintenance?</h4><span class="text-2xl">+</span></div><p class="text-gray-300 mt-2 hidden">Yes — monthly or one-time options.</p></div>
+      </div>
+    </section>
+
+    <!-- CONTACT --> -->
+    <section id="contact" class="py-20 px-6 text-center">
+      <h3 class="text-3xl font-bold mb-6">Contact Me</h3>
+      <div class="max-w-lg mx-auto bg-gray-800 p-6 rounded-xl shadow-xl space-y-4 relative overflow-hidden">
+        <input id="name" class="w-full p-3 rounded bg-gray-700 text-white" placeholder="Your Name">
+        <input id="email" class="w-full p-3 rounded bg-gray-700 text-white" placeholder="Your Email">
+        <textarea id="message" class="w-full p-3 rounded bg-gray-700 text-white" placeholder="Your Message"></textarea>
+        <button onclick="sendMessage()" class="w-full bg-accent hover:bg-opacity-90 p-3 rounded text-white font-bold">Send Message</button>
+        <p id="status" class="mt-4 text-lg"></p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-8 text-center text-gray-300 bg-gray-900 border-t border-gray-700">
+    <div class="flex justify-center space-x-6 text-2xl">
+      <a href="https://wa.me/234XXXXXXXXXX"><img src="https://img.icons8.com/ios-filled/50/4caf50/whatsapp.png" class="w-8"></a>
+      <a href="https://linkedin.com/in/yourprofile"><img src="https://img.icons8.com/ios-filled/50/60a5fa/linkedin.png" class="w-8"></a>
+      <a href="https://x.com/your_x_handle"><img src="https://img.icons8.com/ios-filled/50/ffffff/twitter.png" class="w-8"></a>
+    </div>
+    <p class="mt-4">© 2025 Tesleem Olatundun. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Theme switch
+    const themeSelect = document.getElementById('themeSelect');
+    themeSelect.addEventListener('change', (e)=>{
+      document.documentElement.setAttribute('data-theme', e.target.value);
+      // accent color update for buttons
+      document.querySelectorAll('.text-blue-300').forEach(el=> el.style.color = getComputedStyle(document.documentElement).getPropertyValue('--accent'));
+    });
+
+    // mobile menu
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileClose = document.getElementById('mobileClose');
+    mobileToggle.addEventListener('click', ()=> mobileMenu.classList.add('open'));
+    mobileClose.addEventListener('click', ()=> mobileMenu.classList.remove('open'));
+
+    // FAQ toggle
+    function toggleFAQ(el){ const p = el.querySelector('p'); const icon = el.querySelector('span'); p.classList.toggle('hidden'); icon.textContent = icon.textContent === '+'? '-' : '+'; }
+
+    // sendMessage placeholder (connects to your Flask /contact)
+    async function sendMessage(){ const name=document.getElementById('name').value.trim(); const email=document.getElementById('email').value.trim(); const message=document.getElementById('message').value.trim(); const status=document.getElementById('status'); if(!name||!email||!message){ status.textContent='All fields required'; status.classList.add('text-red-400'); return;} status.textContent='Sending...'; try{ const res=await fetch('/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,message})}); const data=await res.json(); status.textContent=data.message; if(data.status==='success') status.className='text-green-400'; else status.className='text-red-400'; }catch(err){ status.textContent='Failed to send'; status.className='text-red-400'; }}
+
+    // GSAP: brick shatter + entry + scroll animations
+    function createBricks(){
+      const wrap = document.getElementById('brickWrap');
+      const cols = Math.ceil(window.innerWidth / 70);
+      const rows = 3; // top row of bricks
+      for(let r=0;r<rows;r++){
+        for(let c=0;c<cols;c++){
+          const el = document.createElement('div');
+          el.className='brick';
+          el.style.position='absolute';
+          el.style.left = (c*70 + (Math.random()*20 -10)) + 'px';
+          el.style.top = (r*36 + (Math.random()*6 -3)) + 'px';
+          el.style.transformOrigin='center';
+          wrap.appendChild(el);
+        }
+      }
+    }
+
+    // animate bricks to shatter and content to fall into place
+    window.addEventListener('load', ()=>{
+      createBricks();
+      const bricks = gsap.utils.toArray('.brick');
+
+      // shrink body opacity then show content with stagger
+      gsap.to('body', {opacity:1, duration:0.2});
+
+      // play shatter: bricks fly out and fade
+      gsap.to(bricks, {
+        duration: 1.2,
+        y: i => -150 - Math.random()*200,
+        x: i => (Math.random()>0.5?1:-1)*(100 + Math.random()*400),
+        rotation: ()=> (Math.random()*360)-180,
+        scale: 1.05,
+        opacity: 0,
+        stagger: { each: 0.01 },
+        ease: 'power4.out',
+        onComplete: ()=> document.getElementById('brickWrap').remove()
+      });
+
+      // falling content
+      gsap.from('main section, footer',{
+        y: -40,
+        opacity: 0,
+        stagger: 0.12,
+        delay: 0.4,
+        duration: 0.9,
+        ease: 'bounce.out'
+      });
+
+      // scroll-triggered subtle reveals
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.from('.proj-card',{
+        y:40, opacity:0, duration:0.8, stagger:0.12,
+        scrollTrigger:{ trigger:'#projects', start:'top 80%' }
+      });
+      gsap.from('#skills .proj-card',{y:40, opacity:0, duration:0.8, stagger:0.12, scrollTrigger:{ trigger:'#skills', start:'top 85%'}});
+    });
+
+    // update accent color when theme changes
+    function updateAccent(){ const accent=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(); document.querySelectorAll('.expand-hover').forEach(el=>el.style.transform=''); document.querySelectorAll('button, .text-blue-300').forEach(el=>{ if(el.tagName==='BUTTON') el.style.backgroundColor = accent; else el.style.color = accent; }); }
+    themeSelect.addEventListener('change', ()=> setTimeout(updateAccent,50));
+
+  </script>
+</body>
+</html>
